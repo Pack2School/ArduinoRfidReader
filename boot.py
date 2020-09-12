@@ -3,19 +3,6 @@ import machine
 import time
 pin = machine.Pin(2, machine.Pin.OUT)
 
-# def connect():
-#     import network
-#     import machine
-#     pin = machine.Pin(2, machine.Pin.OUT)
-#     wlan = network.WLAN(network.STA_IF)
-#     wlan.active(True)
-#     if not wlan.isconnected():
-#         print('connecting to network...')
-#         wlan.connect('motek', 'kuzydog11')
-#         while not wlan.isconnected():
-#             pass
-#     print('network config:', wlan.ifconfig())
-
 
 def toggle_pin(sec):
     t_end = time.time() + sec * 60
@@ -30,7 +17,7 @@ def connect_multiple():
     pin.on()
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    credentials = [('motek_EXT', 'kuzydog11'),('motek', 'kuzydog11')]
+    credentials = [('SSID1', 'password1'),('SSID2', 'password2')]
     tried = 0
     if not wlan.isconnected():
         print('connecting to network...', credentials[0][0])

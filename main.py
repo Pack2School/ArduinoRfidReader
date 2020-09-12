@@ -50,7 +50,7 @@ def scan_rfids():
             response = binascii.hexlify(bytearray(data)).decode("utf-8")
             print ("full reader response:", response)
             tags = list(map(lambda x : x[14:38], list(filter(None, response.split('bb')))))
-            output = {'stickers': tags, 'error': None}
+            output = {'stickers': tags}
             print ("tags:", tags)
             return ujson.dumps(output)
 
@@ -68,7 +68,7 @@ def azure_connect():
     
     
     ## Parse the connection string into constituent parts
-    dict_keys = parse_connection("HostName=Pack2SchoolIoThub.azure-devices.net;DeviceId=222222222;SharedAccessKey=nZl565nvw/K6eIxn0yAgUjY+iv4iilnJgd4Qi+c08Ho=")
+    dict_keys = parse_connection("HostName=Pack2SchoolIoThub.azure-devices.net;DeviceId=222;SharedAccessKey=iG1TkmqOglbez3Hf7W93RiwSqPiNYngMWSETYjcbWHA=")
     shared_access_key = dict_keys.get(SHARED_ACCESS_KEY)
     shared_access_key_name =  dict_keys.get(SHARED_ACCESS_KEY_NAME)
     gateway_hostname = dict_keys.get(GATEWAY_HOST_NAME)
@@ -100,8 +100,7 @@ def azure_connect():
         ## Send telemetry
         reader_details = get_reader_details()
         print(reader_details)
-        if reader_details == None:
-                mqtt_client.publish(topic=topic, msg="{'stickers': [], 'error': 'RFID reader initialization failed'}")
+
 
         mqtt_client.publish(topic=topic, msg=d2c_message)
         utime.sleep(1)
